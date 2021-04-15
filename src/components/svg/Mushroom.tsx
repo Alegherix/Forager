@@ -3,7 +3,8 @@ import React from 'react';
 export default function MushromSVG() {
   return (
     <svg
-      style={{ width: '40px', height: '40px' }}
+      width="50"
+      height="50"
       viewBox="0 0 497 497"
       xmlns="http://www.w3.org/2000/svg"
     >

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   GoogleMap,
   useLoadScript,
@@ -27,9 +27,7 @@ const options = {
 
 const Title = styled.h1`
   font-size: 3rem;
-  text-align: center;
   color: #9e70db;
-  display: inline;
 `;
 
 const LogoContainer = styled.div`
@@ -37,17 +35,26 @@ const LogoContainer = styled.div`
   position: absolute;
   left: 3%;
   top: 3%;
-  height: 40px;
-  width: 40px;
+  width: 300px;
+  display: flex;
+  justify-items: center;
+  align-items: center;
+  gap: 0.3rem;
 `;
 
-function App() {
-  console.log(process.env.REACT_APP_GOOGLE_MAPS_API_KEY);
+interface IMarker {
+  lat: number;
+  lng: number;
+  time: Date;
+}
 
+function App() {
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY as string,
     libraries,
   });
+
+  const [markers, setMarkers] = useState<IMarker[]>([]);
 
   if (loadError) return <div>Error loading...</div>;
   if (!isLoaded) return <div>Loading...</div>;
@@ -58,13 +65,31 @@ function App() {
         <Title>Forager</Title>
         <MushromSVG />
       </LogoContainer>
-
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
         zoom={14}
         center={center}
         options={options}
-      ></GoogleMap>
+        onClick={(event) => {
+          setMarkers((current) => [
+            ...current,
+            {
+              lat: event.latLng?.lat()!,
+              lng: event.latLng?.lng()!,
+              time: new Date(),
+            },
+          ]);
+        }}
+      >
+        {markers.map((marker) => {
+          return (
+            <Marker
+              key={marker.time.toISOString()}
+              position={{ lat: marker.lat, lng: marker.lng }}
+            />
+          );
+        })}
+      </GoogleMap>
     </main>
   );
 }
