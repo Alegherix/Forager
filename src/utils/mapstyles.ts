@@ -1,13 +1,58 @@
 const style = [
   {
-    featureType: 'water',
-    elementType: 'geometry',
+    featureType: 'administrative',
+    elementType: 'geometry.fill',
+    stylers: [
+      {
+        color: '#7f2200',
+      },
+      {
+        visibility: 'off',
+      },
+    ],
+  },
+  {
+    featureType: 'administrative',
+    elementType: 'geometry.stroke',
     stylers: [
       {
         visibility: 'on',
       },
       {
-        color: '#aee2e0',
+        color: '#87ae79',
+      },
+    ],
+  },
+  {
+    featureType: 'administrative',
+    elementType: 'labels.text.fill',
+    stylers: [
+      {
+        color: '#495421',
+      },
+    ],
+  },
+  {
+    featureType: 'administrative',
+    elementType: 'labels.text.stroke',
+    stylers: [
+      {
+        color: '#ffffff',
+      },
+      {
+        visibility: 'on',
+      },
+      {
+        weight: 4.1,
+      },
+    ],
+  },
+  {
+    featureType: 'administrative.neighborhood',
+    elementType: 'labels',
+    stylers: [
+      {
+        visibility: 'off',
       },
     ],
   },
@@ -22,10 +67,28 @@ const style = [
   },
   {
     featureType: 'poi',
+    elementType: 'geometry',
+    stylers: [
+      {
+        visibility: 'on',
+      },
+    ],
+  },
+  {
+    featureType: 'poi',
     elementType: 'geometry.fill',
     stylers: [
       {
         color: '#769E72',
+      },
+    ],
+  },
+  {
+    featureType: 'poi',
+    elementType: 'labels',
+    stylers: [
+      {
+        visibility: 'off',
       },
     ],
   },
@@ -96,11 +159,11 @@ const style = [
     ],
   },
   {
-    featureType: 'road.local',
+    featureType: 'road.highway',
     elementType: 'geometry',
     stylers: [
       {
-        color: '#A4C67D',
+        color: '#EBF4A4',
       },
     ],
   },
@@ -114,16 +177,17 @@ const style = [
     ],
   },
   {
-    featureType: 'road.highway',
+    featureType: 'road.local',
     elementType: 'geometry',
     stylers: [
       {
-        color: '#EBF4A4',
+        color: '#A4C67D',
       },
     ],
   },
   {
     featureType: 'transit',
+    elementType: 'all',
     stylers: [
       {
         visibility: 'off',
@@ -131,59 +195,14 @@ const style = [
     ],
   },
   {
-    featureType: 'administrative',
-    elementType: 'geometry.stroke',
+    featureType: 'water',
+    elementType: 'geometry',
     stylers: [
       {
         visibility: 'on',
       },
       {
-        color: '#87ae79',
-      },
-    ],
-  },
-  {
-    featureType: 'administrative',
-    elementType: 'geometry.fill',
-    stylers: [
-      {
-        color: '#7f2200',
-      },
-      {
-        visibility: 'off',
-      },
-    ],
-  },
-  {
-    featureType: 'administrative',
-    elementType: 'labels.text.stroke',
-    stylers: [
-      {
-        color: '#ffffff',
-      },
-      {
-        visibility: 'on',
-      },
-      {
-        weight: 4.1,
-      },
-    ],
-  },
-  {
-    featureType: 'administrative',
-    elementType: 'labels.text.fill',
-    stylers: [
-      {
-        color: '#495421',
-      },
-    ],
-  },
-  {
-    featureType: 'administrative.neighborhood',
-    elementType: 'labels',
-    stylers: [
-      {
-        visibility: 'off',
+        color: '#aee2e0',
       },
     ],
   },
