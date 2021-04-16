@@ -1,24 +1,17 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
 import BlueBerrySVG from './svg/Blueberry';
 import LingonSVG from './svg/Lingon';
 import MushromSVG from './svg/Mushroom';
 
 interface ForagePickerProps {}
 
-const ForageContainer = styled.div`
-  z-index: 2;
-  position: absolute;
-  bottom: -2px;
-  left: -2px;
-  background-color: white;
-  padding: 0.7rem;
-  border-radius: 10px;
-`;
-
 interface IForage {
   name: string;
   Icon: React.FunctionComponent;
+}
+
+interface IForageSelector extends IForage {
+  updateForage: (forage: IForage) => void;
 }
 
 const forages: IForage[] = [
@@ -31,26 +24,60 @@ const forages: IForage[] = [
     Icon: LingonSVG,
   },
   {
-    name: 'Blåbär',
+    name: 'Blueberry',
     Icon: BlueBerrySVG,
   },
 ];
 
-const ForagePicker: React.FC<ForagePickerProps> = ({}) => {
+const ForageSelector: React.FunctionComponent<IForageSelector> = (forage) => {
+  const { Icon } = forage;
+  return (
+    <div
+      className="hover:border-purple-500 hover:bg-purple-300 border-4 border-white cursor-pointer p-2 rounded-md"
+      onClick={() => forage.updateForage(forage)}
+    >
+      <Icon />
+    </div>
+  );
+};
+
+const SelectedForage: React.FC<IForage> = ({ Icon }) => {
+  return (
+    <div className="border-purple-600 border-4 p-2 rounded-md cursor-pointer">
+      <Icon />
+    </div>
+  );
+};
+
+const ForagePicker: React.FC<ForagePickerProps> = () => {
   const [forage, setForage] = useState<IForage>(forages[0]);
   const [expanded, setExpanded] = useState<Boolean>(false);
 
+  const updateForage = (forage: IForage) => {
+    setExpanded(!expanded);
+    setForage(forage);
+  };
+
   return (
-    <ForageContainer onClick={() => setExpanded(!expanded)}>
+    <div
+      className="z-10 absolute bottom-0 left-0 rounded-md bg-white"
+      onClick={() => setExpanded(!expanded)}
+    >
       {expanded && (
-        <div>
-          {forages.map((Forage) => {
-            return <Forage.Icon />;
+        <div className="flex gap-4 rounded-md">
+          {forages.map((forage) => {
+            return (
+              <ForageSelector
+                key={forage.name}
+                updateForage={updateForage}
+                {...forage}
+              />
+            );
           })}
         </div>
       )}
-      {!expanded && forage && <forage.Icon />}
-    </ForageContainer>
+      {!expanded && <SelectedForage {...forage} />}
+    </div>
   );
 };
 
