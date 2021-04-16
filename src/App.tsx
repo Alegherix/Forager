@@ -7,12 +7,17 @@ import {
 import { Libraries } from '@react-google-maps/api/dist/utils/make-load-script-url';
 import { formatRelative } from 'date-fns';
 import React, { useCallback, useRef, useState } from 'react';
+import Authorization from './auth/Authorization';
 import ForagePicker from './components/ForagePicker';
 import Locate from './components/Locate';
 import Logo from './components/Logo';
 import forages from './utils/data';
-import { IForage, IMarker } from './utils/interfaces';
+import { IDBForageEntity, IForage, IMarker } from './utils/interfaces';
 import mapStyle from './utils/mapstyles';
+import { saveToDatabase } from './auth/Authorization';
+
+// TODO -> Sätt upp någon form av event listener för att försöka göra så att man enbart lägger till en forage vid double tap,
+// TODO -> Skapa clusters när vi har flera forages vid samma ställe
 
 const libraries: Libraries = ['places'];
 const mapContainerStyle = {
@@ -27,6 +32,7 @@ const options = {
   styles: mapStyle,
   disableDefaultUI: true,
   zoomControl: true,
+  gestureHandling: 'greedy',
 };
 
 function App() {
@@ -40,15 +46,21 @@ function App() {
   const [selectedForage, setSelectedForage] = useState<IForage>(forages[0]);
 
   const onMapClick = (event) => {
-    setMarkers((current) => [
-      ...current,
-      {
-        lat: event.latLng?.lat()!,
-        lng: event.latLng?.lng()!,
-        time: new Date(),
-        selectedForage: selectedForage,
-      },
-    ]);
+    const newEvent = {
+      lat: event.latLng?.lat()!,
+      lng: event.latLng?.lng()!,
+      createdAt: new Date(),
+      selectedForage: selectedForage,
+    };
+    setMarkers((current) => [...current, newEvent]);
+
+    const dbEntity: IDBForageEntity = {
+      lat: newEvent.lat,
+      lng: newEvent.lng,
+      name: newEvent.selectedForage.name,
+    };
+
+    saveToDatabase(dbEntity);
   };
 
   const mapRef = useRef<GoogleMap>();
@@ -60,7 +72,7 @@ function App() {
     mapRef.current!.panTo({ lat, lng });
     // Won't compile otherwise cause can't find setZoom function.
     // @ts-ignore: Unreachable code error
-    mapRef.current!.setZoom(16);
+    mapRef.current!.setZoom(19);
   }, []);
 
   if (loadError) return <div>Error loading...</div>;
@@ -72,6 +84,7 @@ function App() {
       <Locate panTo={panTo} />
       {/* <Debugbar selectedForage={selectedForage} /> */}
       <ForagePicker setSelectedForage={setSelectedForage} />
+      <Authorization />
 
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
@@ -84,7 +97,7 @@ function App() {
         {markers.map((marker) => {
           return (
             <Marker
-              key={marker.time.toISOString()}
+              key={marker.createdAt.toISOString()}
               position={{ lat: marker.lat, lng: marker.lng }}
               icon={{
                 url: marker.selectedForage.url || '/blueberry.svg',
@@ -109,7 +122,8 @@ function App() {
             <div>
               <h2>Din {selectedMarker.selectedForage.name}</h2>
               <p>
-                Tillagd den {formatRelative(selectedMarker.time, new Date())}
+                Tillagd den{' '}
+                {formatRelative(selectedMarker.createdAt, new Date())}
               </p>
             </div>
           </InfoWindow>

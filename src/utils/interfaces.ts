@@ -11,6 +11,12 @@ export interface IForageSelector extends IForage {
 export interface IMarker {
   lat: number;
   lng: number;
-  time: Date;
+  createdAt: Date;
   selectedForage: IForage;
+}
+
+export interface IDBForageEntity {
+  lat: number;
+  lng: number;
+  name: string;
 }
