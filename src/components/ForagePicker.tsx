@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
 import forages from '../utils/data';
 import { IForage, IForageSelector } from '../utils/interfaces';
-import BlueBerrySVG from './svg/Blueberry';
-import LingonSVG from './svg/Lingon';
-import MushromSVG from './svg/Mushroom';
 
 interface ForagePickerProps {
-  setSelectedForage: any;
+  setSelectedForage: (forage: IForage) => void;
 }
 
 const ForageSelector: React.FunctionComponent<IForageSelector> = (forage) => {

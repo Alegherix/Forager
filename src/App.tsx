@@ -1,19 +1,18 @@
-import React, { useCallback, useRef, useState } from 'react';
 import {
   GoogleMap,
-  useLoadScript,
-  Marker,
   InfoWindow,
+  Marker,
+  useLoadScript,
 } from '@react-google-maps/api';
 import { Libraries } from '@react-google-maps/api/dist/utils/make-load-script-url';
-import mapStyle from './utils/mapstyles';
-import styled from 'styled-components';
-import MushromSVG from './components/svg/Mushroom';
 import { formatRelative } from 'date-fns';
-import BasketSVG from './components/svg/Basket';
+import React, { useCallback, useRef, useState } from 'react';
 import ForagePicker from './components/ForagePicker';
-import { IForage, IMarker } from './utils/interfaces';
+import Locate from './components/Locate';
+import Logo from './components/Logo';
 import forages from './utils/data';
+import { IForage, IMarker } from './utils/interfaces';
+import mapStyle from './utils/mapstyles';
 
 const libraries: Libraries = ['places'];
 const mapContainerStyle = {
@@ -52,9 +51,16 @@ function App() {
     ]);
   };
 
-  const mapRef = useRef();
+  const mapRef = useRef<GoogleMap>();
   const onMapLoad = useCallback((map) => {
     mapRef.current = map;
+  }, []);
+
+  const panTo = useCallback(({ lat, lng }) => {
+    mapRef.current!.panTo({ lat, lng });
+    // Won't compile otherwise cause can't find setZoom function.
+    // @ts-ignore: Unreachable code error
+    mapRef.current!.setZoom(16);
   }, []);
 
   if (loadError) return <div>Error loading...</div>;
@@ -62,24 +68,9 @@ function App() {
 
   return (
     <main className="relative">
-      <div
-        style={{ left: '3%', top: '3%' }}
-        className="z-10 absolute flex items-center gap-2 bg-blue-200 rounded-lg p-1"
-      >
-        <h1 style={{ color: '#c97e4b' }} className="mr-2 text-3xl">
-          Forager
-        </h1>
-        <BasketSVG />
-      </div>
-
-      <div
-        style={{ top: 0, left: '50%' }}
-        className="px-2 bg-white absolute z-10"
-      >
-        <p className="text-center">Debug</p>
-        <p>{JSON.stringify(selectedForage)}</p>
-      </div>
-
+      <Logo />
+      <Locate panTo={panTo} />
+      {/* <Debugbar selectedForage={selectedForage} /> */}
       <ForagePicker setSelectedForage={setSelectedForage} />
 
       <GoogleMap
