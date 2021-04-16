@@ -1,33 +1,13 @@
 import React, { useState } from 'react';
+import forages from '../utils/data';
+import { IForage, IForageSelector } from '../utils/interfaces';
 import BlueBerrySVG from './svg/Blueberry';
 import LingonSVG from './svg/Lingon';
 import MushromSVG from './svg/Mushroom';
 
-interface ForagePickerProps {}
-
-interface IForage {
-  name: string;
-  Icon: React.FunctionComponent;
+interface ForagePickerProps {
+  setSelectedForage: any;
 }
-
-interface IForageSelector extends IForage {
-  updateForage: (forage: IForage) => void;
-}
-
-const forages: IForage[] = [
-  {
-    name: 'Kantarell',
-    Icon: MushromSVG,
-  },
-  {
-    name: 'Lingon',
-    Icon: LingonSVG,
-  },
-  {
-    name: 'Blueberry',
-    Icon: BlueBerrySVG,
-  },
-];
 
 const ForageSelector: React.FunctionComponent<IForageSelector> = (forage) => {
   const { Icon } = forage;
@@ -43,19 +23,20 @@ const ForageSelector: React.FunctionComponent<IForageSelector> = (forage) => {
 
 const SelectedForage: React.FC<IForage> = ({ Icon }) => {
   return (
-    <div className="border-purple-600 border-4 p-2 rounded-md cursor-pointer">
+    <div className="border-purple-500 border-4 p-2 rounded-md cursor-pointer">
       <Icon />
     </div>
   );
 };
 
-const ForagePicker: React.FC<ForagePickerProps> = () => {
+const ForagePicker: React.FC<ForagePickerProps> = ({ setSelectedForage }) => {
   const [forage, setForage] = useState<IForage>(forages[0]);
   const [expanded, setExpanded] = useState<Boolean>(false);
 
   const updateForage = (forage: IForage) => {
     setExpanded(!expanded);
     setForage(forage);
+    setSelectedForage(forage);
   };
 
   return (
