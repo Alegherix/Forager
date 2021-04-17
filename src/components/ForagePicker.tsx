@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import forages from '../utils/data';
-import { IForage, IForageSelector } from '../utils/interfaces';
+import { UIForage, IForageSelector } from '../utils/interfaces';
 
 interface ForagePickerProps {
-  setSelectedForage: (forage: IForage) => void;
+  setSelectedForage: (forage: UIForage) => void;
 }
 
 const ForageSelector: React.FunctionComponent<IForageSelector> = (forage) => {
@@ -18,7 +18,7 @@ const ForageSelector: React.FunctionComponent<IForageSelector> = (forage) => {
   );
 };
 
-const SelectedForage: React.FC<IForage> = ({ Icon }) => {
+const SelectedForage: React.FC<UIForage> = ({ Icon }) => {
   return (
     <div className="border-purple-500 border-4 p-2 rounded-md cursor-pointer">
       <Icon />
@@ -27,10 +27,10 @@ const SelectedForage: React.FC<IForage> = ({ Icon }) => {
 };
 
 const ForagePicker: React.FC<ForagePickerProps> = ({ setSelectedForage }) => {
-  const [forage, setForage] = useState<IForage>(forages[0]);
+  const [forage, setForage] = useState<UIForage>(forages[0]);
   const [expanded, setExpanded] = useState<Boolean>(false);
 
-  const updateForage = (forage: IForage) => {
+  const updateForage = (forage: UIForage) => {
     setExpanded(!expanded);
     setForage(forage);
     setSelectedForage(forage);

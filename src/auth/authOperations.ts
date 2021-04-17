@@ -1,15 +1,15 @@
-import { IDBForageEntity, IForagePartial } from './../utils/interfaces';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
+import { IDBForageEntity, IForagePartial } from './../utils/interfaces';
 import initFireBase from './initFirebase';
 
 initFireBase();
 const firestore = firebase.firestore();
 const auth = firebase.auth();
 
-export async function collectedForages() {
-  const forages = await firestore
+export function collectedForages() {
+  return firestore
     .collection('forages')
     .where('uid', '==', auth.currentUser?.uid)
     .get()
@@ -28,7 +28,6 @@ export async function collectedForages() {
       });
       return temp;
     });
-  return forages;
 }
 
 export const saveToDatabase = async ({

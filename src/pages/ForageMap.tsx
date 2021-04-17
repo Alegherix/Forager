@@ -6,15 +6,15 @@ import {
 } from '@react-google-maps/api';
 import { Libraries } from '@react-google-maps/api/dist/utils/make-load-script-url';
 import { formatRelative } from 'date-fns';
+import firebase from 'firebase/app';
 import 'firebase/auth';
 import React, { useCallback, useRef, useState } from 'react';
-import { saveToDatabase } from '../auth/authOperations';
+import { collectedForages, saveToDatabase } from '../auth/authOperations';
 import ForagePicker from '../components/ForagePicker';
 import Locate from '../components/Locate';
 import forages from '../utils/data';
-import { IDBForageEntity, IForage, IMarker } from '../utils/interfaces';
+import { IDBForageEntity, UIForage } from '../utils/interfaces';
 import mapStyle from '../utils/mapstyles';
-import { collectedForages } from '../auth/authOperations';
 
 // TODO -> Sätt upp någon form av event listener för att försöka göra så att man enbart lägger till en forage vid double tap,
 // TODO -> Skapa clusters när vi har flera forages vid samma ställe
@@ -41,35 +41,30 @@ function ForageMap() {
     libraries,
   });
 
-  const [markers, setMarkers] = useState<IMarker[]>([]);
-  const [selectedMarker, setSelectedMarker] = useState<IMarker | null>(null);
-  const [selectedForage, setSelectedForage] = useState<IForage>(forages[0]);
-  const [databaseForage, setDatabaseForage] = useState<IDBForageEntity[]>([]);
-  // const [selectedDbForage, setSelectedDbForage] = useState<
+  const [marker, setMarker] = useState<IDBForageEntity | null>(null);
+  const [selectedUIForage, setSelectedUIForage] = useState<UIForage>(
+    forages[0]
+  );
+  const [forage, setForage] = useState<IDBForageEntity[]>([]);
 
   const onMapClick = (event) => {
-    // Add markers to Local State
-    const newEvent = {
+    const newForage: IDBForageEntity = {
       lat: event.latLng?.lat()!,
       lng: event.latLng?.lng()!,
-      createdAt: new Date(),
-      selectedForage: selectedForage,
+      name: selectedUIForage.name,
+      url: selectedUIForage.url,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
     };
-    setMarkers((current) => [...current, newEvent]);
 
-    saveToDatabase({
-      lat: newEvent.lat,
-      lng: newEvent.lng,
-      name: newEvent.selectedForage.name,
-      url: newEvent.selectedForage.url,
-    });
+    saveToDatabase(newForage);
+    setForage((current) => [...current, newForage]);
   };
 
   const mapRef = useRef<GoogleMap>();
   const onMapLoad = useCallback(async (map) => {
     mapRef.current = map;
     const forages = await collectedForages();
-    setDatabaseForage(forages);
+    setForage(forages);
   }, []);
 
   const panTo = useCallback(({ lat, lng }) => {
@@ -85,8 +80,7 @@ function ForageMap() {
   return (
     <main className="relative">
       <Locate panTo={panTo} />
-      <ForagePicker setSelectedForage={setSelectedForage} />
-
+      <ForagePicker setSelectedForage={setSelectedUIForage} />
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
         zoom={14}
@@ -95,54 +89,40 @@ function ForageMap() {
         onClick={onMapClick}
         onLoad={onMapLoad}
       >
-        {markers.map((marker) => {
-          return (
-            <Marker
-              key={marker.createdAt.toISOString()}
-              position={{ lat: marker.lat, lng: marker.lng }}
-              icon={{
-                url: marker.selectedForage.url || '/blueberry.svg',
-                scaledSize: new window.google.maps.Size(30, 30),
-                origin: new window.google.maps.Point(0, 0),
-                anchor: new window.google.maps.Point(15, 15),
-              }}
-              onClick={() => {
-                setSelectedMarker(marker);
-              }}
-            />
-          );
-        })}
-
-        {databaseForage.map(({ lat, lng, createdAt, url }) => {
+        {forage.map((forage) => {
+          const { lat, lng, createdAt, url } = forage;
           return (
             <Marker
               key={createdAt}
               position={{ lat, lng }}
               icon={{
-                url: url || '/blueberry.svg',
+                url: url,
                 scaledSize: new window.google.maps.Size(30, 30),
                 origin: new window.google.maps.Point(0, 0),
                 anchor: new window.google.maps.Point(15, 15),
               }}
-              // onClick={() => {
-              //   setSelectedMarker(marker);
-              // }}
+              onClick={() => {
+                setMarker(forage);
+              }}
             />
           );
         })}
 
-        {selectedMarker && (
+        {marker && (
           <InfoWindow
-            position={{ lat: selectedMarker.lat, lng: selectedMarker.lng }}
+            position={{ lat: marker.lat, lng: marker.lng }}
             onCloseClick={() => {
-              setSelectedMarker(null);
+              setMarker(null);
             }}
           >
             <div>
-              <h2>Din {selectedMarker.selectedForage.name}</h2>
+              <h2>Your {marker.name}</h2>
               <p>
-                Tillagd den{' '}
-                {formatRelative(selectedMarker.createdAt, new Date())}
+                Added:{' '}
+                {formatRelative(
+                  new Date(marker.createdAt.seconds * 1000),
+                  new Date()
+                )}
               </p>
             </div>
           </InfoWindow>

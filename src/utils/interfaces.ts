@@ -1,27 +1,21 @@
-export interface IForage {
+export interface IForageBase {
   name: string;
-  Icon: React.FunctionComponent;
   url: string;
 }
 
-export interface IForageSelector extends IForage {
-  updateForage: (forage: IForage) => void;
+export interface UIForage extends IForageBase {
+  Icon: React.FunctionComponent;
 }
 
-export interface IMarker {
+export interface IForagePartial extends IForageBase {
   lat: number;
   lng: number;
-  createdAt: Date;
-  selectedForage: IForage;
 }
 
 export interface IDBForageEntity extends IForagePartial {
-  createdAt: string;
+  createdAt: any;
 }
 
-export interface IForagePartial {
-  lat: number;
-  lng: number;
-  name: string;
-  url: string;
+export interface IForageSelector extends UIForage {
+  updateForage: (forage: UIForage) => void;
 }

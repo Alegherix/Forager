@@ -1,9 +1,9 @@
 import BlueBerrySVG from '../components/svg/Blueberry';
 import LingonSVG from '../components/svg/Lingon';
 import MushromSVG from '../components/svg/Mushroom';
-import { IForage } from './interfaces';
+import { UIForage } from './interfaces';
 
-const forages: IForage[] = [
+const forages: UIForage[] = [
   {
     name: 'Kantarell',
     Icon: MushromSVG,
