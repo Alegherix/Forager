@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import FirebaseAuth from './auth/FirebaseAuth';
-import ForageMap from './components/ForageMap';
+import FirebaseAuth from './pages/FirebaseAuth';
+import ForageMap from './pages/ForageMap';
 import PrivateRoute from './components/PrivateRoute';
 import { AuthProvider } from './hooks/useAuth';
 

@@ -15,8 +15,13 @@ export interface IMarker {
   selectedForage: IForage;
 }
 
-export interface IDBForageEntity {
+export interface IDBForageEntity extends IForagePartial {
+  createdAt: string;
+}
+
+export interface IForagePartial {
   lat: number;
   lng: number;
   name: string;
+  url: string;
 }
