@@ -18,7 +18,7 @@ const firebaseAuthConfig = {
   ],
 };
 
-const FirebaseAuth: FunctionComponent = () => {
+const Signin: FunctionComponent = () => {
   return (
     <main className="h-screen w-screen bg-green-100 flex items-center justify-center">
       <div className="max-w-lg mx-auto flex flex-col justify-center">
@@ -39,4 +39,4 @@ const FirebaseAuth: FunctionComponent = () => {
   );
 };
 
-export default FirebaseAuth;
+export default Signin;

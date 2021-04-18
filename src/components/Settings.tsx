@@ -8,7 +8,7 @@ const Settings: React.FC = () => {
   return (
     <MapUIComponent
       Icon={SettingsSVG}
-      bottomOfset={20}
+      bottomOfset={80}
       callback={() => history.push('/dashboard')}
     />
   );

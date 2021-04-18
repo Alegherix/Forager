@@ -15,4 +15,8 @@
   body {
     @apply overflow-hidden;
   }
+
+  .marineTransition {
+    @apply bg-gradient-to-b from-marine to-paleMarine;
+  }
 }

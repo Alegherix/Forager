@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import FirebaseAuth from './pages/FirebaseAuth';
+import Signin from './pages/Signin';
 import ForageMap from './pages/ForageMap';
 import PrivateRoute from './components/PrivateRoute';
 import { AuthProvider } from './hooks/useAuth';
@@ -15,7 +15,7 @@ const App: React.FC = () => {
             <Switch>
               <PrivateRoute exact path="/" component={ForageMap} />
               <PrivateRoute path="/dashboard" component={Dashboard} />
-              <Route path="/signin" component={FirebaseAuth} />
+              <Route path="/signin" component={Signin} />
             </Switch>
           </AuthProvider>
         </Router>

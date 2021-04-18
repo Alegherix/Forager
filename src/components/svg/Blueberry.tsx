@@ -3,8 +3,8 @@ import React from 'react';
 export default function BlueBerrySVG() {
   return (
     <svg
-      width="50"
-      height="50"
+      // width="50"
+      // height="50"
       viewBox="0 0 504.127 504.127"
       xmlns="http://www.w3.org/2000/svg"
     >

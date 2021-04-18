@@ -13,8 +13,9 @@ const MapUIComponent: React.FC<MapUIComponentProps> = ({
 }) => {
   return (
     <div
+      style={{ bottom: `${bottomOfset}px` }}
       onClick={callback}
-      className={`z-10 absolute bottom-${bottomOfset} left-0 bg-white border-purple-500 border-4 p-2 rounded-md cursor-pointer hover:bg-purple-300`}
+      className={`z-10 absolute left-0 bg-white border-purple-500 border-4 p-2 rounded-md cursor-pointer hover:bg-purple-300`}
     >
       <Icon />
     </div>

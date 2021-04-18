@@ -8,6 +8,10 @@ module.exports = {
       fontFamily: {
         sans: ['BerkshireSwash', ...fontFamily.sans],
       },
+      colors: {
+        marine: '#284181',
+        paleMarine: '#284181AA',
+      },
     },
   },
   variants: {
