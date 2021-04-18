@@ -8,10 +8,11 @@ import { Libraries } from '@react-google-maps/api/dist/utils/make-load-script-ur
 import { formatRelative } from 'date-fns';
 import firebase from 'firebase/app';
 import 'firebase/auth';
-import React, { useCallback, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { collectedForages, saveToDatabase } from '../auth/authOperations';
 import ForagePicker from '../components/ForagePicker';
 import Locate from '../components/Locate';
+import Settings from '../components/Settings';
 import forages from '../utils/data';
 import { IDBForageEntity, UIForage } from '../utils/interfaces';
 import mapStyle from '../utils/mapstyles';
@@ -41,11 +42,16 @@ function ForageMap() {
     libraries,
   });
 
+  // Used for painting infoBox of current selected forage
   const [marker, setMarker] = useState<IDBForageEntity | null>(null);
+
+  // Sets the selected forage from DB
+  const [forage, setForage] = useState<IDBForageEntity[]>([]);
+
+  // Used for syncing UI forage components with IDBForageEntities
   const [selectedUIForage, setSelectedUIForage] = useState<UIForage>(
     forages[0]
   );
-  const [forage, setForage] = useState<IDBForageEntity[]>([]);
 
   const onMapClick = (event) => {
     const newForage: IDBForageEntity = {
@@ -81,6 +87,7 @@ function ForageMap() {
     <main className="relative">
       <Locate panTo={panTo} />
       <ForagePicker setSelectedForage={setSelectedUIForage} />
+      <Settings />
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
         zoom={14}

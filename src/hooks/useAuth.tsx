@@ -23,11 +23,9 @@ const AuthContext = createContext<IAuthContext>({
 });
 
 export const AuthProvider: FunctionComponent = ({ children }) => {
-  // Skapar en useState hoook där vi antigen har en firebase user eller null,
   const [user, setUser] = useState<firebase.User | null>(null);
   const [loading, setLoading] = useState<Boolean>(true);
 
-  // Skapar signout funktionen
   const logout = async () => {
     try {
       await firebase.auth().signOut();

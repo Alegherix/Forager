@@ -4,6 +4,7 @@ import FirebaseAuth from './pages/FirebaseAuth';
 import ForageMap from './pages/ForageMap';
 import PrivateRoute from './components/PrivateRoute';
 import { AuthProvider } from './hooks/useAuth';
+import Dashboard from './pages/Dashboard';
 
 const App: React.FC = () => {
   return (
@@ -13,6 +14,7 @@ const App: React.FC = () => {
           <AuthProvider>
             <Switch>
               <PrivateRoute exact path="/" component={ForageMap} />
+              <PrivateRoute path="/dashboard" component={Dashboard} />
               <Route path="/signin" component={FirebaseAuth} />
             </Switch>
           </AuthProvider>

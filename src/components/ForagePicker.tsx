@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import forages from '../utils/data';
-import { UIForage, IForageSelector } from '../utils/interfaces';
+import { IForageSelector, UIForage } from '../utils/interfaces';
+import MapUIComponent from './MapUIComponent';
 
 interface ForagePickerProps {
   setSelectedForage: (forage: UIForage) => void;
@@ -18,13 +19,9 @@ const ForageSelector: React.FunctionComponent<IForageSelector> = (forage) => {
   );
 };
 
-const SelectedForage: React.FC<UIForage> = ({ Icon }) => {
-  return (
-    <div className="border-purple-500 border-4 p-2 rounded-md cursor-pointer">
-      <Icon />
-    </div>
-  );
-};
+const SelectedForage: React.FC<UIForage> = ({ Icon }) => (
+  <MapUIComponent Icon={Icon} bottomOfset={0} />
+);
 
 const ForagePicker: React.FC<ForagePickerProps> = ({ setSelectedForage }) => {
   const [forage, setForage] = useState<UIForage>(forages[0]);
@@ -42,17 +39,19 @@ const ForagePicker: React.FC<ForagePickerProps> = ({ setSelectedForage }) => {
       onClick={() => setExpanded(!expanded)}
     >
       {expanded && (
-        <div className="flex gap-4 rounded-md">
-          {forages.map((forage) => {
-            return (
-              <ForageSelector
-                key={forage.name}
-                updateForage={updateForage}
-                {...forage}
-              />
-            );
-          })}
-        </div>
+        <>
+          <div className="flex gap-4 rounded-md">
+            {forages.map((forage) => {
+              return (
+                <ForageSelector
+                  key={forage.name}
+                  updateForage={updateForage}
+                  {...forage}
+                />
+              );
+            })}
+          </div>
+        </>
       )}
       {!expanded && <SelectedForage {...forage} />}
     </div>
