@@ -1,5 +1,4 @@
-import firebase from 'firebase/app';
-import 'firebase/auth';
+import firebase, { auth } from '../auth/authOperations';
 import { FunctionComponent } from 'react';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import HeroSVG from '../components/svg/Hero';

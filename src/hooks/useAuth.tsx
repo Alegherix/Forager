@@ -1,5 +1,3 @@
-import firebase from 'firebase/app';
-import 'firebase/auth';
 import {
   createContext,
   FunctionComponent,
@@ -7,10 +5,7 @@ import {
   useEffect,
   useState,
 } from 'react';
-import initFirebase from '../auth/initFirebase';
-
-// Gör callet för att faktiskt initializera Firebase
-initFirebase();
+import firebase from '../auth/authOperations';
 
 interface IAuthContext {
   user: firebase.User | null;

@@ -6,10 +6,11 @@ import {
 } from '@react-google-maps/api';
 import { Libraries } from '@react-google-maps/api/dist/utils/make-load-script-url';
 import { formatRelative } from 'date-fns';
-import firebase from 'firebase/app';
-import 'firebase/auth';
 import { useCallback, useRef, useState } from 'react';
-import { collectedForages, saveToDatabase } from '../auth/authOperations';
+import firebase, {
+  collectedForages,
+  saveToDatabase,
+} from '../auth/authOperations';
 import ForagePicker from '../components/ForagePicker';
 import Locate from '../components/Locate';
 import Settings from '../components/Settings';
