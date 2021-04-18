@@ -18,8 +18,6 @@ const Locate: React.FC<LocateProps> = ({ panTo }) => {
               lat: latitude,
               lng: longitude,
             });
-            console.log('Lat', latitude);
-            console.log('Lon', longitude);
           },
           (err) => {
             console.log(err);

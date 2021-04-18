@@ -11,8 +11,7 @@ const ForageSelector: React.FunctionComponent<IForageSelector> = (forage) => {
   const { Icon } = forage;
   return (
     <div
-      style={{ width: '74px', height: '74px' }}
-      className="hover:border-purple-500 hover:bg-purple-300 border-4 border-white cursor-pointer p-2 rounded-md"
+      className="hover:border-purple-500 hover:bg-purple-300 border-4 border-white cursor-pointer p-2 rounded-md w-18 h-18"
       onClick={() => forage.updateForage(forage)}
     >
       <Icon />

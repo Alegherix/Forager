@@ -21,14 +21,17 @@ import mapStyle from '../utils/mapstyles';
 // TODO -> Skapa clusters när vi har flera forages vid samma ställe
 
 const libraries: Libraries = ['places'];
+
 const mapContainerStyle = {
   width: '100vvw',
   height: '100vh',
 };
+
 const center = {
   lat: 57.652,
   lng: 12.116,
 };
+
 const options = {
   styles: mapStyle,
   disableDefaultUI: true,

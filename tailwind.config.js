@@ -10,7 +10,13 @@ module.exports = {
       },
       colors: {
         marine: '#284181',
-        paleMarine: '#284181AA',
+        paleMarine: '#284181CC',
+      },
+      width: {
+        18: '74px',
+      },
+      height: {
+        18: '74px',
       },
     },
   },

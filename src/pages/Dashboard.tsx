@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { collectedForages } from '../auth/authOperations';
-import BlueBerrySVG from '../components/svg/Blueberry';
-import HeroSVG from '../components/svg/Hero';
-import LingonSVG from '../components/svg/Lingon';
-import { IDBForageEntity } from '../utils/interfaces';
+import { forageEntitiesCollection } from '../utils/data';
+import { IDBForageEntity, IForageCardComponent } from '../utils/interfaces';
 
-const ForageCard = ({ name, Icon, amountFound, iconBgColor }) => {
+const ForageCard: React.FunctionComponent<IForageCardComponent> = ({
+  name,
+  Icon,
+  amountFound,
+  iconBgColor,
+}) => {
   return (
     <div className="marineTransition shadow-xl flex gap-4 rounded-md items-center py-6 px-2 mx-auto flex-wrap justify-center w-full max-w-md">
       <div
@@ -33,30 +36,13 @@ const Dashboard: React.FC = () => {
     fetchData();
   }, []);
 
-  function getAmount(name: string) {
-    return forages.filter((item) => item.name === name).length;
-  }
-
-  const forageEntities = [
-    {
-      name: 'Chantarelle',
-      Icon: HeroSVG,
-      amountFound: getAmount('Kantarell'),
-      iconBgColor: '#D2A6FF',
-    },
-    {
-      name: 'Lingon',
-      Icon: LingonSVG,
-      amountFound: getAmount('Lingon'),
-      iconBgColor: '#93A8F0',
-    },
-    {
-      name: 'Blueberry',
-      Icon: BlueBerrySVG,
-      amountFound: getAmount('Blueberry'),
-      iconBgColor: '#93F0A8',
-    },
-  ];
+  // Sets the amount of found forages for each forageEntity
+  const forageEntities = forageEntitiesCollection.map((entity) => {
+    entity.amountFound = forages.filter(
+      (item) => item.name === entity.name
+    ).length;
+    return { ...entity };
+  });
 
   return (
     <>
