@@ -48,7 +48,7 @@ function ForageMap() {
     forages[0]
   );
 
-  const onMapClick = (event) => {
+  const onMapClick = async (event) => {
     const newForage: IDBForageEntity = {
       lat: event.latLng?.lat()!,
       lng: event.latLng?.lng()!,
@@ -56,7 +56,9 @@ function ForageMap() {
       url: selectedUIForage.url,
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
     };
-    saveToDatabase(newForage);
+    const id = await saveToDatabase(newForage);
+    newForage.id = id;
+
     setForage((current) => [...current, newForage]);
   };
 
