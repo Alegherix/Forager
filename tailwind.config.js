@@ -6,7 +6,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['BerkshireSwash', 'Merriweather', ...fontFamily.sans],
+        sans: ['Merriweather', 'BerkshireSwash', ...fontFamily.sans],
       },
       colors: {
         marine: '#284181',

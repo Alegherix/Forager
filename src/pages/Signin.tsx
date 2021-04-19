@@ -1,6 +1,6 @@
-import firebase, { auth } from '../auth/authOperations';
 import { FunctionComponent } from 'react';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
+import firebase from '../auth/authOperations';
 import HeroSVG from '../components/svg/Hero';
 
 const firebaseAuthConfig = {
@@ -19,7 +19,10 @@ const firebaseAuthConfig = {
 
 const Signin: FunctionComponent = () => {
   return (
-    <main className="h-screen w-screen bg-green-100 flex items-center justify-center">
+    <main
+      style={{ fontFamily: 'BerkshireSwash' }}
+      className="h-screen w-screen bg-green-100 flex items-center justify-center"
+    >
       <div className="max-w-lg mx-auto flex flex-col justify-center">
         <div className="mb-4">
           <h1 className="text-5xl text-purple-700 font-bold text-center mb-2">

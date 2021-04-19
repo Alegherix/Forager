@@ -67,12 +67,9 @@ export const saveImageToForage = async (imageUrl: string, id: string) => {
   console.log(`Trying to save to ${id}`);
 
   const forageRef = firestore.collection('forages').doc(id);
-  await forageRef.set(
-    {
-      images: [imageUrl],
-    },
-    { merge: true }
-  );
+  await forageRef.update({
+    images: firebase.firestore.FieldValue.arrayUnion(imageUrl),
+  });
 };
 
 export { firestore, auth, firebase as default };

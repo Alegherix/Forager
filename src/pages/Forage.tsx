@@ -13,7 +13,7 @@ const Forage: React.FC = () => {
   useEffect(() => {
     if (!location.state) history.push('/');
     setForage(location.state);
-  }, []);
+  }, [history, location.state]);
 
   return (
     <>

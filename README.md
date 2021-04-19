@@ -20,4 +20,5 @@ Don't worry, only the person responsible for adding a forage will be able to see
 - Google Maps API
 - Firebase Auth
 - Firestore Database
+- Google Cloud Storage
 - Vercel

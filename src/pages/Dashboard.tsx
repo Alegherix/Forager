@@ -1,10 +1,9 @@
+import 'firebase/storage';
 import React, { useEffect, useState } from 'react';
 import { collectedForages } from '../auth/authOperations';
 import Navbar from '../components/Navbar';
 import { forageEntitiesCollection } from '../utils/data';
 import { IDBForageEntity, IForageCardComponent } from '../utils/interfaces';
-import 'firebase/storage';
-import UploadForm from '../components/UploadForm';
 
 const ForageCard: React.FunctionComponent<IForageCardComponent> = ({
   name,
@@ -49,10 +48,7 @@ const Dashboard: React.FC = () => {
 
   return (
     <>
-      <main
-        style={{ backgroundColor: '#D2D7F5', fontFamily: 'Merriweather' }}
-        className="h-screen "
-      >
+      <main style={{ backgroundColor: '#D2D7F5' }} className="h-screen">
         <Navbar />
         <div className="px-2 flex flex-col xl:flex-row gap-4 max-w-screen-xl mx-auto">
           {forageEntities.map((entity) => (

@@ -1,0 +1,5 @@
+1) Sätt upp bucket nycklar i Vercel
+2) Uppdatera README -- DONE
+3) Fixa Google Maps att visa Bilderna
+4) Fixa forage vyn att faktiskt visa dem nya Bildern, samt en Static map med marker.
+5) Fixa Dashboard att visa static maps med markers och förslag att lägga till bilder. 

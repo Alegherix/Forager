@@ -1,11 +1,5 @@
-import {
-  GoogleMap,
-  InfoWindow,
-  Marker,
-  useLoadScript,
-} from '@react-google-maps/api';
+import { GoogleMap, Marker, useLoadScript } from '@react-google-maps/api';
 import { Libraries } from '@react-google-maps/api/dist/utils/make-load-script-url';
-import { formatRelative } from 'date-fns';
 import { useCallback, useRef, useState } from 'react';
 import firebase, {
   collectedForages,
@@ -13,11 +7,11 @@ import firebase, {
 } from '../auth/authOperations';
 import ForagePicker from '../components/ForagePicker';
 import Locate from '../components/Locate';
+import MapInfoWindow from '../components/MapInfoWindow';
 import Settings from '../components/Settings';
 import forages from '../utils/data';
 import { IDBForageEntity, UIForage } from '../utils/interfaces';
 import mapStyle from '../utils/mapstyles';
-import { useHistory } from 'react-router-dom';
 
 // TODO -> Sätt upp någon form av event listener för att försöka göra så att man enbart lägger till en forage vid double tap,
 // TODO -> Skapa clusters när vi har flera forages vid samma ställe
@@ -66,6 +60,7 @@ function ForageMap() {
       url: selectedUIForage.url,
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
     };
+    console.log(newForage.createdAt);
 
     saveToDatabase(newForage);
     setForage((current) => [...current, newForage]);
@@ -84,8 +79,6 @@ function ForageMap() {
     // @ts-ignore: Unreachable code error
     mapRef.current!.setZoom(19);
   }, []);
-
-  const history = useHistory();
 
   if (loadError) return <div>Error loading Map...</div>;
   if (!isLoaded) return <div>Loading...</div>;
@@ -122,32 +115,7 @@ function ForageMap() {
           );
         })}
 
-        {marker && (
-          <InfoWindow
-            position={{ lat: marker.lat, lng: marker.lng }}
-            onCloseClick={() => {
-              setMarker(null);
-            }}
-          >
-            <div>
-              <h2>Your {marker.name}</h2>
-              <p>
-                Added:{' '}
-                {formatRelative(
-                  new Date(marker.createdAt.seconds * 1000),
-                  new Date()
-                )}
-              </p>
-              <button
-                onClick={() => {
-                  history.push('/forage', marker);
-                }}
-              >
-                Add Image
-              </button>
-            </div>
-          </InfoWindow>
-        )}
+        {marker && <MapInfoWindow marker={marker} setMarker={setMarker} />}
       </GoogleMap>
     </main>
   );
