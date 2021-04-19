@@ -1,8 +1,7 @@
 import { GoogleMap, Marker, useLoadScript } from '../pages/ForageMap';
-import { IDBForageEntity } from '../utils/interfaces';
 import mapStyle from '../utils/mapstyles';
 
-const MapCard: React.FC<IDBForageEntity> = ({ lat, lng, createdAt, url }) => {
+const MapCard = ({ lat, lng, createdAt, url, height }) => {
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY as string,
   });
@@ -20,7 +19,7 @@ const MapCard: React.FC<IDBForageEntity> = ({ lat, lng, createdAt, url }) => {
     <GoogleMap
       mapContainerStyle={{
         width: '100%',
-        height: '300px',
+        height: height,
         borderRadius: '10px',
         cursor: 'pointer',
       }}

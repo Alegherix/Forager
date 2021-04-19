@@ -12,7 +12,6 @@ import forages from '../utils/data';
 import { IDBForageEntity, UIForage } from '../utils/interfaces';
 import mapStyle from '../utils/mapstyles';
 
-// TODO -> Sätt upp någon form av event listener för att försöka göra så att man enbart lägger till en forage vid double tap,
 // TODO -> Skapa clusters när vi har flera forages vid samma ställe
 
 const mapContainerStyle = {
@@ -30,6 +29,7 @@ const options = {
   disableDefaultUI: true,
   zoomControl: true,
   gestureHandling: 'greedy',
+  disableDoubleClickZoom: true,
 };
 
 function ForageMap() {
@@ -56,8 +56,6 @@ function ForageMap() {
       url: selectedUIForage.url,
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
     };
-    console.log(newForage.createdAt);
-
     saveToDatabase(newForage);
     setForage((current) => [...current, newForage]);
   };
@@ -89,8 +87,8 @@ function ForageMap() {
         zoom={14}
         center={center}
         options={options}
-        onClick={onMapClick}
         onLoad={onMapLoad}
+        onDblClick={onMapClick}
       >
         {forage.map((forage) => {
           const { lat, lng, createdAt, url } = forage;

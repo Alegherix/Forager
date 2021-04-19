@@ -36,8 +36,9 @@ const UploadForm = ({ id }) => {
   return (
     <div>
       <form className="flex flex-col w-full " onSubmit={handleSubmit}>
+        <label htmlFor="Image">Image of location</label>
         <input
-          className="mb-2"
+          className="mb-2 mt-2"
           type="file"
           accept="image/png, image/jpeg, image/webp"
           onChange={handleChange}
@@ -46,7 +47,7 @@ const UploadForm = ({ id }) => {
           disabled={submitting}
           className="p-2 bg-blue-500 rounded-md w-28 disabled:opacity-50"
         >
-          Upload File
+          Add Image
         </button>
       </form>
     </div>

@@ -70,7 +70,7 @@ const Dashboard: React.FC = () => {
             {lastEntities.map((entity) => {
               return (
                 <div key={entity.id} className="m-4">
-                  <MapCard {...entity} />
+                  <MapCard {...entity} height={300} />
                   <button
                     onClick={() => {
                       history.push('/forage', entity);

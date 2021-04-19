@@ -44,6 +44,31 @@ export function collectedForages(): Promise<IDBForageEntity[]> {
     });
 }
 
+// Used for refetching a specific forage.
+export async function refetchForage(lat: number): Promise<IDBForageEntity> {
+  return firestore
+    .collection('forages')
+    .where('lat', '==', lat)
+    .get()
+    .then((querySnapshot) => {
+      let temp;
+      querySnapshot.forEach((doc) => {
+        const { lat, lng, name, url, createdAt, images } = doc.data();
+        const forageEntity: IDBForageEntity = {
+          lat,
+          lng,
+          name,
+          url,
+          createdAt,
+          id: doc.id,
+          images,
+        };
+        temp = forageEntity;
+      });
+      return temp;
+    });
+}
+
 export async function getForage(id: string): Promise<IDBForageEntity> {
   const docRef = await firestore.collection('forages').doc(id);
   return docRef.get().then((doc) => {
