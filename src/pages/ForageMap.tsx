@@ -84,7 +84,7 @@ function ForageMap() {
   if (!isLoaded) return <div>Loading...</div>;
 
   return (
-    <main className="relative">
+    <main className="relative overflow-hidden">
       <Locate panTo={panTo} />
       <ForagePicker setSelectedForage={setSelectedUIForage} />
       <Settings />

@@ -11,6 +11,7 @@ module.exports = {
       colors: {
         marine: '#284181',
         paleMarine: '#284181CC',
+        clouds: '#D2D7F5',
       },
       width: {
         18: '74px',
@@ -23,6 +24,7 @@ module.exports = {
   variants: {
     extend: {
       borderColor: ['focus', 'hover'],
+      opacity: ['disabled'],
     },
   },
   plugins: [],

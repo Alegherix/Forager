@@ -19,7 +19,7 @@ if (!firebase.apps.length) {
 const firestore = firebase.firestore();
 const auth = firebase.auth();
 
-export function collectedForages() {
+export function collectedForages(): Promise<IDBForageEntity[]> {
   return firestore
     .collection('forages')
     .where('uid', '==', auth.currentUser?.uid)
@@ -44,6 +44,23 @@ export function collectedForages() {
     });
 }
 
+export async function getForage(id: string): Promise<IDBForageEntity> {
+  const docRef = await firestore.collection('forages').doc(id);
+  return docRef.get().then((doc) => {
+    const { lat, lng, name, url, createdAt, images } = doc.data() as any;
+    const forageEntity: IDBForageEntity = {
+      lat,
+      lng,
+      name,
+      url,
+      createdAt,
+      id: docRef.id,
+      images,
+    };
+    return forageEntity;
+  });
+}
+
 export const saveToDatabase = async ({
   lat,
   lng,
@@ -64,8 +81,6 @@ export const saveToDatabase = async ({
 
 export const saveImageToForage = async (imageUrl: string, id: string) => {
   if (!auth.currentUser) return;
-  console.log(`Trying to save to ${id}`);
-
   const forageRef = firestore.collection('forages').doc(id);
   await forageRef.update({
     images: firebase.firestore.FieldValue.arrayUnion(imageUrl),

@@ -17,23 +17,31 @@ const Forage: React.FC = () => {
 
   return (
     <>
-      <main>
+      <main className="bg-clouds min-h-screen pb-4">
         <Navbar />
-        <div className=" mx-auto flex justify-center flex-col text-center">
-          <p>{JSON.stringify(forage)}</p>
-          <h1>{forage?.name}</h1>
-          <p>Lat: {forage?.lat}</p>
-          <p>Lng: {forage?.lng}</p>
-          {forage?.images && (
-            <img
-              width={100}
-              height={100}
-              src={forage?.images[0]}
-              alt={forage.name}
-            />
-          )}
-
-          <UploadForm id={forage?.id} />
+        <div className="flex justify-center flex-col text-center max-w-screen-xl mx-auto px-2">
+          <h2 className="text-3xl font-bold mb-2 text-left">
+            Your saved Images for this location
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 mx-auto">
+            {forage?.images &&
+              forage?.images.map((img) => {
+                return (
+                  <img
+                    key={img}
+                    className="w-80 h-80 max-w-xs rounded-md mr-4 mb-4"
+                    src={img}
+                    alt={forage.name}
+                  />
+                );
+              })}
+          </div>
+          <section className="text-left mt-8">
+            <h2 className="text-3xl font-bold mb-2">
+              Upload an image of your location
+            </h2>
+            <UploadForm id={forage?.id} />
+          </section>
         </div>
       </main>
     </>

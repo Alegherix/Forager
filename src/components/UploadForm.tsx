@@ -1,8 +1,11 @@
 import { useState } from 'react';
-import firebase, { saveImageToForage } from '../auth/authOperations';
+import firebase, { getForage, saveImageToForage } from '../auth/authOperations';
+import { useHistory } from 'react-router-dom';
 
 const UploadForm = ({ id }) => {
   const [image, setImage] = useState<File>();
+  const [submitting, setSubmitting] = useState(false);
+  const history = useHistory();
 
   const handleChange = (e) => {
     const file = e.target.files[0];
@@ -17,6 +20,7 @@ const UploadForm = ({ id }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setSubmitting(true);
     if (!image) return;
 
     const storageRef = firebase.storage().ref();
@@ -24,6 +28,9 @@ const UploadForm = ({ id }) => {
     await imageRef.put(image);
     const url = await imageRef.getDownloadURL();
     await saveImageToForage(url, id);
+    const newForage = await getForage(id);
+    history.push('/forage', newForage);
+    setSubmitting(false);
   };
 
   return (
@@ -35,7 +42,12 @@ const UploadForm = ({ id }) => {
           accept="image/png, image/jpeg, image/webp"
           onChange={handleChange}
         />
-        <button className="w-28">Upload File</button>
+        <button
+          disabled={submitting}
+          className="p-2 bg-blue-500 rounded-md w-28 disabled:opacity-50"
+        >
+          Upload File
+        </button>
       </form>
     </div>
   );
