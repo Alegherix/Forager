@@ -40,7 +40,7 @@ const Navbar = () => {
 
   return (
     <nav
-      // pb-4 =16px, 80px is baseline height, 100px is ul
+      // pb-4 = 16px, 80px is baseline height, 100px is ul
       style={{ height: open ? 'calc(100px + 80px + 16px)' : '80px' }}
       className="flex flex-col bg-marine w-full text-white mb-8"
     >

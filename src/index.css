@@ -17,6 +17,9 @@
 }
 
 @layer base {
+  li {
+    @apply cursor-pointer hover:underline px-2;
+  }
   .marineTransition {
     @apply bg-gradient-to-b from-marine to-paleMarine;
   }

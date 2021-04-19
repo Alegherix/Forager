@@ -1,5 +1,4 @@
 import { GoogleMap, Marker, useLoadScript } from '@react-google-maps/api';
-import { Libraries } from '@react-google-maps/api/dist/utils/make-load-script-url';
 import { useCallback, useRef, useState } from 'react';
 import firebase, {
   collectedForages,
@@ -15,8 +14,6 @@ import mapStyle from '../utils/mapstyles';
 
 // TODO -> Sätt upp någon form av event listener för att försöka göra så att man enbart lägger till en forage vid double tap,
 // TODO -> Skapa clusters när vi har flera forages vid samma ställe
-
-const libraries: Libraries = ['places'];
 
 const mapContainerStyle = {
   width: '100vvw',
@@ -38,7 +35,6 @@ const options = {
 function ForageMap() {
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY as string,
-    libraries,
   });
 
   // Used for painting infoBox of current selected forage
@@ -121,4 +117,4 @@ function ForageMap() {
   );
 }
 
-export default ForageMap;
+export { GoogleMap, Marker, useLoadScript, ForageMap as default };
