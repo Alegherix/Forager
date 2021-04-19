@@ -3,6 +3,8 @@ import { collectedForages } from '../auth/authOperations';
 import Navbar from '../components/Navbar';
 import { forageEntitiesCollection } from '../utils/data';
 import { IDBForageEntity, IForageCardComponent } from '../utils/interfaces';
+import 'firebase/storage';
+import UploadForm from '../components/UploadForm';
 
 const ForageCard: React.FunctionComponent<IForageCardComponent> = ({
   name,

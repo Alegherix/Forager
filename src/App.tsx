@@ -5,6 +5,7 @@ import ForageMap from './pages/ForageMap';
 import PrivateRoute from './components/PrivateRoute';
 import { AuthProvider } from './hooks/useAuth';
 import Dashboard from './pages/Dashboard';
+import Forage from './pages/Forage';
 
 const App: React.FC = () => {
   return (
@@ -15,6 +16,7 @@ const App: React.FC = () => {
             <Switch>
               <PrivateRoute exact path="/" component={ForageMap} />
               <PrivateRoute path="/dashboard" component={Dashboard} />
+              <PrivateRoute path="/forage" component={Forage} />
               <Route path="/signin" component={Signin} />
             </Switch>
           </AuthProvider>

@@ -23,6 +23,8 @@ export interface IForagePartial extends IForageBase {
 // Primary Interface used to fetch Forage Entities from database
 export interface IDBForageEntity extends IForagePartial {
   createdAt: any;
+  images?: string[];
+  id?: string;
 }
 
 // Used for rendering Card components and for being able to separate data from implementation

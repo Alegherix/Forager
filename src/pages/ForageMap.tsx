@@ -17,6 +17,7 @@ import Settings from '../components/Settings';
 import forages from '../utils/data';
 import { IDBForageEntity, UIForage } from '../utils/interfaces';
 import mapStyle from '../utils/mapstyles';
+import { useHistory } from 'react-router-dom';
 
 // TODO -> Sätt upp någon form av event listener för att försöka göra så att man enbart lägger till en forage vid double tap,
 // TODO -> Skapa clusters när vi har flera forages vid samma ställe
@@ -84,6 +85,8 @@ function ForageMap() {
     mapRef.current!.setZoom(19);
   }, []);
 
+  const history = useHistory();
+
   if (loadError) return <div>Error loading Map...</div>;
   if (!isLoaded) return <div>Loading...</div>;
 
@@ -135,6 +138,13 @@ function ForageMap() {
                   new Date()
                 )}
               </p>
+              <button
+                onClick={() => {
+                  history.push('/forage', marker);
+                }}
+              >
+                Add Image
+              </button>
             </div>
           </InfoWindow>
         )}
