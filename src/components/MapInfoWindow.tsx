@@ -47,7 +47,7 @@ const MapInfoWindow: React.FC<IMapInfo> = ({ marker, setMarker }) => {
                     }}
                     key={img}
                     style={{ maxWidth: '75px' }}
-                    className="w-full mr-2"
+                    className="w-full mr-2 cursor-pointer"
                     src={img}
                     alt={marker.name}
                   />
