@@ -47,8 +47,15 @@ export function collectedForages(): Promise<IDBForageEntity[]> {
 export async function getForage(id: string): Promise<IDBForageEntity> {
   const docRef = await firestore.collection('forages').doc(id);
   return docRef.get().then((doc) => {
-    const { lat, lng, name, url, createdAt, images } = doc.data() as any;
-    const forageEntity: IDBForageEntity = {
+    const {
+      lat,
+      lng,
+      name,
+      url,
+      createdAt,
+      images,
+    } = doc.data() as IDBForageEntity;
+    return {
       lat,
       lng,
       name,
@@ -57,7 +64,6 @@ export async function getForage(id: string): Promise<IDBForageEntity> {
       id: docRef.id,
       images,
     };
-    return forageEntity;
   });
 }
 

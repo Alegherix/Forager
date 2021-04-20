@@ -17,8 +17,6 @@ import forages from '../utils/data';
 import { IDBForageEntity, UIForage } from '../utils/interfaces';
 import mapStyle from '../utils/mapstyles';
 
-// TODO -> Skapa clusters när vi har flera forages vid samma ställe
-
 const mapContainerStyle = {
   width: '100vvw',
   height: '100vh',
