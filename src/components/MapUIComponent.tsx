@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface MapUIComponentProps {
-  Icon: React.FunctionComponent;
+  Icon: React.FC;
   bottomOfset: number;
   callback?: () => void;
 }

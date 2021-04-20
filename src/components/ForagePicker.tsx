@@ -7,7 +7,7 @@ interface ForagePickerProps {
   setSelectedForage: (forage: UIForage) => void;
 }
 
-const ForageSelector: React.FunctionComponent<IForageSelector> = (forage) => {
+const ForageSelector: React.FC<IForageSelector> = (forage) => {
   const { Icon } = forage;
   return (
     <div

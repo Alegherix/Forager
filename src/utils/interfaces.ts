@@ -6,7 +6,7 @@ export interface IForageBase {
 
 // Used for displaying Forage entities in UI
 export interface UIForage extends IForageBase {
-  Icon: React.FunctionComponent;
+  Icon: React.FC;
 }
 
 // Used for passing down setFunction to sync state between map and UI Picker
@@ -30,7 +30,7 @@ export interface IDBForageEntity extends IForagePartial {
 // Used for rendering Card components and for being able to separate data from implementation
 export interface IForageCardComponent {
   name: string;
-  Icon: React.FunctionComponent;
+  Icon: React.FC;
   amountFound: number;
   iconBgColor: string;
 }

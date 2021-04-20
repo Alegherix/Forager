@@ -7,7 +7,7 @@ import { forageEntitiesCollection } from '../utils/data';
 import { IDBForageEntity, IForageCardComponent } from '../utils/interfaces';
 import { useHistory } from 'react-router-dom';
 
-const ForageCard: React.FunctionComponent<IForageCardComponent> = ({
+const ForageCard: React.FC<IForageCardComponent> = ({
   name,
   Icon,
   amountFound,
